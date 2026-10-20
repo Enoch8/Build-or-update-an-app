@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghana School Fee Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">School finance manager</p>
+          <h1>Ghana School Fee Dashboard</h1>
+        </div>
+        <button id="exportSummaryPdf" class="primary-btn" type="button">Export PDF</button>
+      </header>
+
+      <main class="dashboard">
+        <section class="summary-grid">
+          <article class="summary-card accent">
+            <span class="label">Students</span>
+            <strong id="studentsCount">0</strong>
+          </article>
+          <article class="summary-card">
+            <span class="label">Total Fees Due</span>
+            <strong id="totalDue">GHS 0.00</strong>
+          </article>
+          <article class="summary-card success">
+            <span class="label">Total Paid</span>
+            <strong id="totalPaid">GHS 0.00</strong>
+          </article>
+          <article class="summary-card warning">
+            <span class="label">Outstanding</span>
+            <strong id="totalOutstanding">GHS 0.00</strong>
+          </article>
+        </section>
+
+        <section class="panel-grid">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Add Student</h2>
+            </div>
+            <form id="studentForm" class="form-grid">
+              <label>
+                Full name
+                <input type="text" name="name" placeholder="Ama Boateng" required />
+              </label>
+              <label>
+                Class
+                <input type="text" name="className" placeholder="JHS 3" required />
+              </label>
+              <label>
+                Guardian
+                <input type="text" name="guardian" placeholder="Kwame Boateng" />
+              </label>
+              <label>
+                Contact
+                <input type="tel" name="contact" placeholder="0244 123 456" />
+              </label>
+              <button class="primary-btn" type="submit">Save Student</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Record Fee</h2>
+            </div>
+            <form id="feeForm" class="form-grid">
+              <label>
+                Student
+                <select name="studentId" id="feeStudentSelect" required></select>
+              </label>
+              <label>
+                Category
+                <select name="category" required>
+                  <option value="Tuition">Tuition</option>
+                  <option value="Exam Fees">Exam Fees</option>
+                  <option value="PTA">PTA</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Library">Library</option>
+                  <option value="Boarding">Boarding</option>
+                  <option value="Uniform">Uniform</option>
+                  <option value="Laboratory">Laboratory</option>
+                  <option value="Other">Other</option>
+                </select>
+              </label>
+              <label>
+                Amount (GHS)
+                <input type="number" name="amount" min="0" step="0.01" placeholder="1500" required />
+              </label>
+              <label>
+                Due date
+                <input type="date" name="dueDate" required />
+              </label>
+              <button class="primary-btn" type="submit">Add Fee</button>
+            </form>
+          </section>
+
+          <section class="panel payment-panel">
+            <div class="panel-header">
+              <h2>Record Payment</h2>
+            </div>
+            <form id="paymentForm" class="form-grid">
+              <label>
+                Student
+                <select name="studentId" id="paymentStudentSelect" required></select>
+              </label>
+              <label>
+                Fee (optional)
+                <select name="feeId" id="feeIdSelect">
+                  <option value="">General payment</option>
+                </select>
+              </label>
+              <label>
+                Amount (GHS)
+                <input type="number" name="amount" min="0" step="0.01" placeholder="600" required />
+              </label>
+              <label>
+                Payment method
+                <select name="method" required>
+                  <option value="Cash">Cash</option>
+                  <option value="Mobile Money">Mobile Money</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Cheque">Cheque</option>
+                </select>
+              </label>
+              <label class="full-width">
+                Notes
+                <input type="text" name="notes" placeholder="Term 1 payment" />
+              </label>
+              <button class="primary-btn" type="submit">Save Payment</button>
+            </form>
+          </section>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Student Balances</h2>
+          </div>
+          <div id="studentList" class="student-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Recent Payments</h2>
+          </div>
+          <div id="paymentHistory" class="history-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
